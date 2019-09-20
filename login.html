@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>HNG - Login</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link href="hng.css" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-primary">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-10 col-lg-12 col-md-9">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <div class="row">
+              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                  </div>
+                  <form class="user" id="login-form">
+                    <div class="form-group">
+                      <input type="email" class="form-control form-control-user" id="email" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control form-control-user" id="password" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                      </div>
+                    </div>
+                    <input type="submit" id="submit" onclick="return false" class="btn btn-primary btn-user btn-block"/>
+                  </form>
+                  <hr>
+                  <div class="text-center">
+                    <a class="small" href="forgot-password.html">Forgot Password?</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" href="register.html">Create an Account!</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+
+<script>
+  var userArrays = []
+  var firebaseConfig = {
+    apiKey: "AIzaSyBOr924cGCbbHoInHYD7C2Bq4O74i7Gzho",
+    authDomain: "whitehat-team.firebaseapp.com",
+    databaseURL: "https://whitehat-team.firebaseio.com",
+    projectId: "whitehat-team",
+    storageBucket: "",
+    messagingSenderId: "832526060895",
+    appId: "1:832526060895:web:061afb75c4eee8f2583aea"
+  };
+  firebase.initializeApp(firebaseConfig);
+  var database = firebase.database();
+</script>
+
+<script>
+    database.ref('/user').on("value",function(snapshots){
+      userArrays = snapshots.val()
+    })
+
+</script>
+  <script>
+    var database = firebase.database();
+    (function(){
+      document.getElementById("submit").addEventListener("click", function(){
+        let email = document.getElementById("email").value
+        let password = document.getElementById("password").value
+        console.log(email, password)
+        for (let user of userArrays){
+          if(user.email == email && user.password == password){
+            alert("Login Successful")
+            return true
+          }
+        }
+        alert("Username or Password is incorrect")
+        return false
+      })
+    })();
+  </script>
+
+</body>
+
+</html>
